@@ -97,15 +97,15 @@ def false_position(equation, E=0.0001):
         raise Exception("Function is not continous!!!")
 
 
-# print(false_position(x**3-x-1)
+# print(false_position(x**3-x-1))
 
-# print(false_position(2*x**2-3)
+# print(false_position(2*x**2-3))
 
-# print(false_position(2*x**3 - 2*x -5)
+# print(false_position(2*x**3 - 2*x -5))
 
-# print(false_position(x**2 - 12)
+# print(false_position(x**2 - 12))
 
-# print(false_position(x**3-48, 0.0001)
+# print(false_position(x**3-48, 0.0001))
 
 
 # print(false_position(x**3 + 2*x**2 + x -1, 0.0001))
