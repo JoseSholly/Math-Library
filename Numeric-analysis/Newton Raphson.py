@@ -6,14 +6,14 @@ def interval(equation):
     # Finding Interval
     equation= sympify(equation)
     L1, L2=[],[]
-    for i in range(0,10):
+    for i in range(-10,10):
         ans=equation.subs({x:f"{i}"})
         if ans<0:
             L1+=[i]
             # print(ans, i)
             #break
    
-    for i in range(0,10):
+    for i in range(-10,10):
         ans=equation.subs({x:f"{i}"})
         if ans>0:
             L2+=[i]
