@@ -14,7 +14,7 @@ def interval(equation):
             # print(ans, i)
             #break
    
-    for i in range(-10,10):
+    for i in range(L1[-1],10):
         ans=equation.subs({x:f"{i}"})
         if ans>0:
             L2+=[i]
