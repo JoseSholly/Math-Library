@@ -4,36 +4,37 @@ x,y = symbols('x y')
 
 def interval(equation):
     # Finding Interval
-    equation= sympify(equation)
-    L1, L2=[],[]
-    for i in range(-10,10):
-        ans=equation.subs({x:f"{i}"})
-        if ans<0:
-            L1+=[i]
-            # print(ans, i)
-            #break
-   
-    for i in range(L1[-1],10):
-        ans=equation.subs({x:f"{i}"})
-        if ans>0:
-            L2+=[i]
-            # print(ans, i)
-            #break
-    return L1[-1],L2[0]
+    equation = sympify(equation)
+    L1, L2 = [], []
+    for i in range(0, 10):
+        ans = equation.subs({x: f"{i}"})
+        if ans < 0:
+            L1 += [i]
+
+    for i in range(0, 10):
+        ans = equation.subs({x: f"{i}"})
+        if ans > 0:
+            L2 += [i]
+    
+    if L2[0]>L1[-1]:
+        return (L1[-1], L2[0])
+    else:
+        return (L2[-1], L1[0] )
 
 
 def is_continuous(equation):
     # For any continuous function
-    
-    x1= interval(equation)[0]
-    x2=interval(equation)[1]
+
+    v1 = interval(equation)[0]
+    v2 = interval(equation)[1]
 
     # Substititing intervals into function
-    fxa=equation.subs({x:x1})
-    fxb=equation.subs({x:x2})
+    fxa = equation.subs({"x": v1})
+    fxb = equation.subs({"x": v2})
+    # print(fxa, fxb)
 
     # Find two points, say a and b such that a<b and f(a)*f(b)=0
-    if x1<x2 and (fxa*fxb)<0:
+    if v1 < v2 and (fxa*fxb) < 0:
         return True
     else:
         return False
@@ -90,10 +91,7 @@ def newton_raphson(equation,E=0.0001):
             raise Exception("Function is not continous!!!")
     else:
         raise Exception("Function is not continous!!!")
-        
 
-#  newton_raphson(equation, tolerance(if given))
- 
 # print(newton_raphson(x**3 - x - 1))
 
 # print(newton_raphson(2*x**3 - 2*x - 5))
@@ -103,3 +101,6 @@ def newton_raphson(equation,E=0.0001):
 # print(newton_raphson(x**3 - 48))
 
 # print(newton_raphson(x**3 + 2*x**2 + x -1))
+
+# print(newton_raphson(2 + sin(x) - x ))
+
