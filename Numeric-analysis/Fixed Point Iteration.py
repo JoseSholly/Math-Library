@@ -4,34 +4,37 @@ x,y = symbols('x y')
 
 def interval(equation):
     # Finding Interval
-    equation= sympify(equation)
-    L1, L2=[],[]
-    for i in range(-10,10):
-        ans=equation.subs({x:f"{i}"})
-        if ans<0:
-            L1+=[i]
+    equation = sympify(equation)
+    L1, L2 = [], []
+    for i in range(0, 10):
+        ans = equation.subs({x: f"{i}"})
+        if ans < 0:
+            L1 += [i]
 
-    for i in range(L1[-1],10):
-        ans=equation.subs({x:f"{i}"})
-
-        if ans>0:
-            L2+=[i]
-        
-    return L1[-1],L2[0]
-
+    for i in range(0, 10):
+        ans = equation.subs({x: f"{i}"})
+        if ans > 0:
+            L2 += [i]
+    
+    if L2[0]>L1[-1]:
+        return (L1[-1], L2[0])
+    else:
+        return (L2[-1], L1[0] )
 
 def is_continuous(equation):
 
     # For any continuous function
-    x1= interval(equation)[0]
-    x2=interval(equation)[1]
+
+    v1 = interval(equation)[0]
+    v2 = interval(equation)[1]
 
     # Substititing intervals into function
-    fxa=equation.subs({x:x1})
-    fxb=equation.subs({x:x2})
+    fxa = equation.subs({"x": v1})
+    fxb = equation.subs({"x": v2})
+    # print(fxa, fxb)
 
     # Find two points, say a and b such that a<b and f(a)*f(b)=0
-    if x1<x2 and (fxa*fxb)<0:
+    if v1 < v2 and (fxa*fxb) < 0:
         return True
     else:
         return False
@@ -79,10 +82,9 @@ def change_sub(equation):
             val= val.replace("x","p")
             char[ind]= sympify(val)
             equation=equation.func(*char)
-
+            
             return solve(equation, p)[0]
-    
-
+        
 def fixed_point_iteration(equation, E=0.0001):
     equation= sympify(equation)
     
@@ -91,8 +93,6 @@ def fixed_point_iteration(equation, E=0.0001):
             # Find the root that lies betwwen a=1 and a=2
             x1= interval(equation)[0]
             x2=interval(equation)[1]
-            # print(x1, x2)
-            
 
             # Making x Subject of formular 
             fx = change_sub(equation)
@@ -102,8 +102,6 @@ def fixed_point_iteration(equation, E=0.0001):
 
             # Substituting mid-point to new equation
             new_x= fx.subs({'x':Xo})
-            
-            # print("Start",round(Xo, 5),round(new_x,5),abs(round(new_x-Xo, 5)))
 
             next= 0.1
             new_p=0
@@ -127,16 +125,14 @@ def fixed_point_iteration(equation, E=0.0001):
                 point+=["x1"]
                 diff+=[abs(round(new_x-next, 5))]
 
-                dic= {"xo":mp, "x1":Fx_mp, "point":point, "difference": diff,"iteration": len(Fx_mp) ,"root": Fx_mp[-1]}
-
                 # Changing previous root to  new root
                 new_x=next
+                
                 if root>20000: break
                 else:continue
-            # Returns answer in a dictionary
-            return dic
 
-                
+            dict_answer= {"xo":mp, "x1":Fx_mp, "point":point, "difference": diff,"iteration": len(Fx_mp) ,"root": Fx_mp[-1]}
+            return dict_answer      
         except:
             raise Exception("Function is not continous!!!") 
     else:
