@@ -2,6 +2,18 @@ import math
 from sympy import *
 x, y = symbols('x y')
 
+"""
+The Secant method approximates the root of a function by constructing a line through 
+two points on the function curve and determining where it intersects the x-axis. 
+It does not require the computation of derivatives like the Newton-Raphson method, 
+making it applicable in cases where the derivative is either difficult or expensive to compute.
+
+The convergence of the Secant method is generally slower than the Newton-Raphson method but faster than the Bisection method. 
+It performs well when the initial guesses are close to the root and the function is well-behaved. 
+However, it may fail to converge or converge slowly for certain functions or when the initial guesses are not sufficiently 
+close to the root.
+"""
+
 
 def interval(equation):
     # Finding Interval
@@ -41,14 +53,15 @@ def is_continuous(equation):
 
 
 def secant(equation, E=0.0001):
-
+    # Input the function f(x) and the desired tolerance= E
+    # Checks if the equation is continuous, then proceeds to calcu;ate
     if is_continuous(equation):
         try:
 
             # Find the value of f(x) at a=1 and a=2
             a = interval(equation)[0]
             b = interval(equation)[1]
-
+            # the initial guesses x0 and x1
             x0, x1 = a, b
             equation = sympify(equation)
             
@@ -91,7 +104,8 @@ def secant(equation, E=0.0001):
 
                 X2+=[x2]
                 fx_X2+=[root]
-
+                
+            # Output the approximate root x obtained after the desired number of iterations or within the desired tolerance.
             dict_answer={"xo": Xo, "f(Xo)":fx_Xo, "x1":X1, "f(x1)":fx_X1, "x2": X2, "f(x2)": fx_X2, "root":X2[-1], "iteration": len(X1)}
             return dict_answer
         except:        
