@@ -1,6 +1,12 @@
 import math
 from sympy import *
 x,y = symbols('x y')
+'''
+The Newton-Raphson method utilizes the derivative of the function to iteratively refine the approximation of the root. 
+It converges rapidly for well-behaved functions and when the initial guess is close to the root. 
+However, it may fail to converge or converge slowly for certain functions or when the initial guess is far from the root. 
+In such cases, alternative methods like the bisection method or the secant method can be used.
+'''
 
 def interval(equation):
     # Finding Interval
@@ -40,7 +46,8 @@ def is_continuous(equation):
         return False
 
 def newton_raphson(equation,E=0.0001):
-    
+    #  the desired tolerance (E)
+    # If equation is continuous, it proceeds but, if not, it raises an exception 
     if is_continuous(equation):
         try:
 
@@ -49,9 +56,9 @@ def newton_raphson(equation,E=0.0001):
             x2=interval(equation)[1]
 
             a,b= x1,x2
-            # Input Equation 
+            # Input the function f(x),
             equation= sympify(equation)
-            # We differentiate the input equation
+            # its derivative f'(x),
             diff_equation= diff(equation, x)
             
             F_x= 0.1
@@ -81,7 +88,8 @@ def newton_raphson(equation,E=0.0001):
 
                 mid_point= root
                 X1+=[(round(root,5)) ]
-
+                
+            # Output the approximate root x obtained after the desired number of iterations or within the desired tolerance.
             answer= {"Xo": X0[:-1], "f(Xo)":fx_X0, "f'(Xo)": fxx_X0, "X1": X1, "Point": point, "root":X0[-1], "iteration": len(fx_X0)}
 
             return answer  
