@@ -1,6 +1,16 @@
 import math
 from sympy import *
 x,y = symbols('x y')
+'''
+In this method, the function g(x) is chosen such that g(x) = x, i.e., 
+finding the root of the function f(x) is transformed into finding a fixed point of g(x). 
+The convergence of the Fixed-Point Iteration method depends on the properties of the function g(x) and the initial guess x0. 
+It requires g(x) to be continuous and satisfy certain conditions, such as Lipschitz continuity, to ensure convergence.
+
+It's important to note that the Fixed-Point Iteration method may not always 
+converge or converge slowly for certain functions or initial guesses. 
+In such cases, other numerical methods like Newton's method or the secant method may be more appropriate.
+'''
 
 def interval(equation):
     # Finding Interval
@@ -87,7 +97,7 @@ def change_sub(equation):
         
 def fixed_point_iteration(equation, E=0.0001):
     equation= sympify(equation)
-    
+    # if equation is continuous, it proceeds but, else, it raise exception 
     if is_continuous(equation):
         try:
             # Find the root that lies betwwen a=1 and a=2
@@ -107,6 +117,14 @@ def fixed_point_iteration(equation, E=0.0001):
             new_p=0
             i=0
             root= 0.1
+            '''
+            While iter < max_iter:
+                - Set x = g(x0) # Compute the next iteration using the function g(x)
+                - If |x - x0| < tol: # Check for convergence
+                    -The root has been found. Exit the algorithm.
+                - Set x0 = x # Update the initial guess for the next iteration
+                - Increment iter by 1.
+            '''
 
             mp, Fx_mp, point, diff= [round(Xo, 5)],[round(new_x,5)],["x1"],[abs(round(new_x-Xo, 5))]
             # While condition keeps working as long as root does not exceed tolerance 0.0001
@@ -130,7 +148,7 @@ def fixed_point_iteration(equation, E=0.0001):
                 
                 if root>20000: break
                 else:continue
-
+            # Output the approximate root x obtained after the desired number of iterations or within the desired tolerance.
             dict_answer= {"xo":mp, "x1":Fx_mp, "point":point, "difference": diff,"iteration": len(Fx_mp) ,"root": Fx_mp[-1]}
             return dict_answer      
         except:
