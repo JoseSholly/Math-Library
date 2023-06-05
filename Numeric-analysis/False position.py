@@ -2,6 +2,13 @@ import math
 from sympy import *
 x, y = symbols('x y')
 
+'''
+The False Position method provides a convergence guarantee when the function is continuous and changes sign over the interval [a, b]. 
+However, it may suffer from slow convergence for certain types of functions, 
+such as those with steep slopes or multiple roots close together. 
+In such cases, other methods like Newton's method or the secant method may be more efficient.
+'''
+
 
 def interval(equation):
     # Finding Interval
@@ -40,6 +47,8 @@ def is_continuous(equation):
 
 
 def false_position(equation, E=0.0001):
+    # Input the function f(x), the interval [a, b], 
+    # the desired tolerance (tol) .
 
     if is_continuous(equation):
         try:
@@ -58,6 +67,10 @@ def false_position(equation, E=0.0001):
             x2 = 0
 
             p1, fx_p1, p2, fx_p2, Xo, fx_Xo, point = [], [], [], [], [], [], []
+            
+            # If |f(c)| < tol or (b - a) / 2 < tol: # Check for convergence
+            # The root has been found. Exit the algorithm.
+            # Maximum iteration is specified in the 
 
             while abs(root) > E and i <= 20:
                 i += 1
@@ -90,7 +103,8 @@ def false_position(equation, E=0.0001):
                 fx_p1 += [round(fxa, 5)]
                 fxb = equation.subs({'x': x1})
                 fx_p2 += [round(fxb, 5)]
-
+                
+            # Output the approximate root c obtained after the desired number of iterations or within the desired tolerance.
             dict_answer = {"x0": p1, "f(x0)": fx_p1, "x1": p2, "f(x1)": fx_p2, "x2": Xo,
                  "f(x2)": fx_Xo, "Point": point, "root": Xo[-1], "iteration": len(p1)}
             return dict_answer
