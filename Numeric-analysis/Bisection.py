@@ -1,9 +1,17 @@
-
+# importing necessary library
 import math
 from sympy import *
 x,y = symbols('x y')
 
+''''
+The Bisection method is a numerical algorithm used to find the root of a continuous function within a given interval. 
+It is a simple and robust iterative process that repeatedly bisects the interval and narrows down the range in which the root lies. 
+The algorithm is based on the Intermediate Value Theorem, which states that if a continuous function changes sign over an interval, 
+then it must have at least one root within that interval.
+'''
+
 def interval(equation):
+    
     # Finding Interval
     equation = sympify(equation)
     L1, L2 = [], []
@@ -48,9 +56,12 @@ def bisection(equation,E=0.0001):
             # Find the value of f(x) at a=1 and a=2
             x1= interval(equation)[0]
             x2=interval(equation)[1]
-
+            # Start with an initial interval [a, b] where the function f(x) changes sign. 
+            # This means that f(a) and f(b) have opposite signs, indicating that a root lies somewhere between a and b.
             a,b= x1,x2
             equation= sympify(equation)
+            
+            # Evaluate the function at the midpoint, f(c).
             fxa=equation.subs({x:a})
             fxb=equation.subs({x:b})
     
@@ -62,7 +73,7 @@ def bisection(equation,E=0.0001):
 
             while abs(t)>E and i<=20:
                 i+=1
-                # Mid-point between interval a and b 
+                # Compute the midpoint of the interval, c, given by c = (a + b) / 2.
                 mid_point= (a+b)/2
                 p1+=[round(a, 5)]
                 p2+=[round(b, 5)]
@@ -92,6 +103,8 @@ def bisection(equation,E=0.0001):
 
                 else:
                     a,b= mid_point
+                # The final midpoint obtained after the desired number of iterations or within the desired tolerance is an approximation 
+                # of the root of the function.
 
             dict_answer= {"a": p1,"f(a)": fx_p1, "b":p2,"f(b)":fx_p2, "mid_point":Xo, "f(mid_point)": fx_Xo, "Point":point, "root": Xo[-1], "iteration":len(p1)}
             return dict_answer
