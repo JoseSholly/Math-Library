@@ -2,6 +2,13 @@ import math
 from sympy import *
 x, y = symbols('x y')
 
+'''
+The Ridder's method combines bisection and linear interpolation to approximate the root of a function. 
+It is an improvement over the bisection method and offers faster convergence. 
+The method ensures that the new approximation always lies between the current interval bounds. 
+However, like other iterative methods, the Ridder's method may not converge or converge slowly for certain functions 
+or when the initial guesses are not well-chosen.
+'''
 
 def interval(equation):
     # Finding Interval
@@ -87,6 +94,7 @@ def ridder(equation, E=0.0001):
                 f1=f3
                 x2=x4  
                 f2=f4
+            # Output the approximate root x3 obtained after the desired number of iterations or within the desired tolerance.
             dict_answer= {'root':root[-1], 'iteration': len(root)}
             return dict_answer
 
