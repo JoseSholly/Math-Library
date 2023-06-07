@@ -2,6 +2,15 @@ import math
 from sympy import *
 x, y = symbols('x y')
 
+'''
+The Steffensen's method uses the fixed-point iteration technique to approximate the root of a function. 
+It improves the rate of convergence by applying the fixed-point iteration twice in each iteration step. 
+By using this accelerated iterative approach, it can achieve faster convergence than standard fixed-point iteration methods.
+
+It's important to note that like other iterative methods, the Steffensen's method may not converge 
+or converge slowly for certain functions or when the initial guess is far from the root. 
+In such cases, alternative numerical methods may be more suitable for finding the root.
+'''
 
 def interval(equation):
     # Finding Interval
@@ -60,7 +69,8 @@ def steffensen(equation, E=0.001):
             # Repeat steps 2 to 4 until f(xi)=0 or |f(xi)|≤Accuracy
             while abs(f_x0) > E and i < 20:
                 i += 1
-
+                
+                # Evaluate the function at the current guess x0
                 # Substituting next value in input equation
                 f_x0 = equation.subs({"x": x0}).n(5)
 
@@ -79,8 +89,10 @@ def steffensen(equation, E=0.001):
                 x_1+=[x1]
                 
                 # Changing initial x_north to new value
+                # # Update the current guess for the next iteration
                 x0 = x1
-
+                
+            # Output the approximate root x3 obtained after the desired number of iterations or within the desired tolerance.
             dict_answer= {"x0": x_0, "f(x0)":f_x_0, "f(x0+f(x0))": f_x0_fx0, "x1": x_1, "root": x_1[-1], "iteration": len(x_1)}
             return dict_answer
 
