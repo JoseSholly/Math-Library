@@ -2,6 +2,16 @@ import math
 from sympy import *
 x, y = symbols('x y')
 
+'''
+The Muller's method utilizes quadratic interpolation to approximate the root of a function. 
+It constructs a quadratic equation that passes through three points and determines the x-coordinate of the point where the quadratic intersects the x-axis. 
+The method is capable of handling complex roots as well.
+
+It's worth noting that the Muller's method can encounter stability issues or fail to converge in certain situations, 
+especially if the initial guesses are poorly chosen or the function has multiple roots in close proximity. 
+In such cases, other numerical methods like the Newton-Raphson method or the bisection method may be more reliable.
+'''
+
 def interval(equation):
     # Finding Interval
     equation = sympify(equation)
@@ -77,10 +87,13 @@ def muller(equation, E=0.001):
                 b= round(a *h2 + delta_2, 5)
                 c= fx_x2
                 # The quadratic equation formular vhas + 0r - depending on the value of b
+                # If |b + discriminant| > |b - discriminant|:
                 if b>0: 
+                    #  discriminant of the quadratic equation
                     x3= x2 + ((-2*c )/ (b + ((b**2) - (4*a*c))**0.5)) 
             
                 else: 
+                    #  discriminant of the quadratic equation
                     x3= x2 + ((-2*c )/ (b - ((b**2) - (4*a*c))**0.5))
                     
 
@@ -93,6 +106,7 @@ def muller(equation, E=0.001):
                 p0, p1, p2=x0, x1,x2
 
                 # x0, x1,x2 =x1, x2, x3 
+                # # Update the current guesses for the next iteration Increment iter by 1.
                 #  Calculating next iteration since RPE>Accuracy
                 x0, x1,x2 =x1, x2, x3
 
@@ -112,7 +126,8 @@ def muller(equation, E=0.001):
 
                 x_3+=[x3]
                 relative_percent+=[rpe*100]
-
+                
+            # Output the approximate root x obtained after the desired number of iterations or within the desired tolerance.
             dict_answer= {'x0': x_0,"x1": x_1, "x2": x_2,"f(x0)": f_x0, "f(x1)":f_x1, "f(x2)":f_x2,
                 'a':a_val, 'b':b_val, 'c':c_val, "x3": x_3, 'rpe':relative_percent,
                 'root': x_3[-1], "iteration": len(x_3)}
