@@ -1,7 +1,12 @@
 import math
 from sympy import *
 x, y = symbols('x y')
-
+'''
+The Halley's method is a higher-order extension of the Newton-Raphson method that utilizes both the first and second derivatives of the function 
+to approximate the root. It can converge more rapidly than the Newton-Raphson method, especially for functions with multiple roots or 
+when the initial guess is far from the root. However, like other iterative methods, 
+it may fail to converge or converge slowly for certain functions or initial guesses.
+'''
 
 def interval(equation):
     # Finding Interval
@@ -67,6 +72,10 @@ def halley(equation, E=0.001):
             i = 0
 
             Xo, f_x0, first_x0, second_x0, x1 = [], [], [], [], []
+            # If |x - x0| < tol: # Check for convergence
+            # The root has been found. Exit the algorithm.
+            #  Set x0 = x # Update the current guess for the next iteration
+            #  Increment iter by 1.
 
             # While loop keep running, then stop if f(xo) is less than Tolerance (accuracy)= 0.001
             while abs(f) > E and i < 10:
@@ -89,7 +98,7 @@ def halley(equation, E=0.001):
                 x_0 = x_curr
 
                 x1 += [xp]
-
+            # Output the approximate root x obtained after the desired number of iterations or within the desired tolerance.
             dict_answer = {'x0': Xo, "f(x0)": f_x0, "f_prime(x0)": first_x0, "f_double_prime(x0)": second_x0, "x1": x1,
                  'root': x1[-1], "iteration": len(x1)}
             return dict_answer
